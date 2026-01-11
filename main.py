@@ -1,3 +1,8 @@
+"""
+"""
+"""
+Конвертер валют
+"""
 import os
 import requests
 from dotenv import load_dotenv
@@ -68,7 +73,7 @@ root.resizable(width=False, height=False)
 # Получаем список валют
 currencies = get_currency_list()
 
-# Поля ввода и выпадающие списки
+# Поля ввода
 tk.Label(root, text="Сумма: ", bg="#B8B8B8").pack(pady=(15, 0))  # метка с надписью сумма, pack размещает элемент на экране
 amount_entry = tk.Entry(root)   # поле для ввода суммы
 amount_entry.pack(pady=(3, 0))
@@ -94,3 +99,92 @@ result_label.pack()
 
 # Запуск главного цикла Tkinter
 root.mainloop()
+
+"""
+Конвертер температур
+"""
+def convert_tempreture():
+    base_temp = base_temp_menu.get()
+    target_temp = target_temp_menu.get()
+    num = num_entry.get()
+
+    # выбор температур происходит через выпадающие списки
+    # ввод числа через текстовое пол
+
+    if not num.isdigit():
+        messagebox.showerror(title="Ошибка", message="Введите число корректно")
+        return
+
+    num = float(num)
+
+    if base_temp == "Fahrenheit" and target_temp == "Fahrenheit":
+        converted_num = num
+        result_label2.config(text=f"{num} {base_temp} = {converted_num:.2f} {target_temp}")
+
+    elif (base_temp == "Fahrenheit") and (target_temp == "Celsius"):
+        converted_num = (num - 32) * (5 / 9)
+        result_label2.config(text=f"{num} {base_temp} = {converted_num:.2f} {target_temp}")
+
+    elif (base_temp == "Fahrenheit") and (target_temp == "Kelvin"):
+        converted_num = (num + 459.67) * (5 / 9)
+        result_label2.config(text=f"{num} {base_temp} = {converted_num:.2f} {target_temp}")
+
+    elif (base_temp == "Celsius") and (target_temp == "Fahrenheit"):
+        converted_num = (num * 1.8) + 32
+        result_label2.config(text=f"{num} {base_temp} = {converted_num:.2f} {target_temp}")
+
+    elif (base_temp == "Celsius") and (target_temp == "Celsius"):
+        converted_num = num
+        result_label2.config(text=f"{num} {base_temp} = {converted_num:.2f} {target_temp}")
+
+    elif (base_temp == "Celsius") and (target_temp == "Kelvin"):
+        converted_num = num + 273
+        result_label2.config(text=f"{num} {base_temp} = {converted_num:.2f} {target_temp}")
+
+    elif (base_temp == "Kelvin") and (target_temp == "Fahrenheit"):
+        converted_num = 1.8 * (num - 273) + 32
+        result_label2.config(text=f"{num} {base_temp} = {converted_num:.2f} {target_temp}")
+
+    elif (base_temp == "Kelvin") and (target_temp == "Celsius"):
+        converted_num = num - 273
+        result_label2.config(text=f"{num} {base_temp} = {converted_num:.2f} {target_temp}")
+
+    elif (base_temp == "Kelvin") and (target_temp == "Kelvin"):
+        converted_num = num
+        result_label2.config(text=f"{num} {base_temp} = {converted_num:.2f} {target_temp}")
+
+
+# Создаеем главное окно
+root2 = tk.Tk()
+root2.title("Конвертер температур")
+root2.geometry("400x300")
+root2.resizable(width=False, height=False)
+
+# Список температур
+temp_options = ["Celsius", "Fahrenheit", "Kelvin"]
+
+# Поля ввода
+tk.Label(root2, text="Число: ", bg="#B8B8B8").pack(pady=(15, 0))
+num_entry = tk.Entry(root2)
+num_entry.pack(pady=(3, 0))
+
+# создадим выпадающие списки
+tk.Label(root2, text="Исходная температура: ", bg="#B8B8B8").pack(pady=(12, 3))
+base_temp_menu = ttk.Combobox(root2, values=temp_options)
+base_temp_menu.pack()
+
+
+tk.Label(root2, text="Целевая температура: ", bg="#B8B8B8").pack(pady=(12, 3))
+target_temp_menu = ttk.Combobox(root2, values=temp_options)
+target_temp_menu.pack()
+
+# Кнопка для конвертации
+convert_button2 = tk.Button(root2, text="Конвертировать", command=convert_tempreture, bg="#66B2FF", activebackground="#939393")
+convert_button2.pack(pady=(10, 3))
+
+# Поле для вывода результата
+result_label2 = tk.Label(root2, text="", font=("Arial", 12))
+result_label2.pack()
+
+# Запуск главного цикла Tkinter
+root2.mainloop()
