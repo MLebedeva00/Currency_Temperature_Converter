@@ -103,10 +103,10 @@ root.mainloop()
 """
 Конвертер температур
 """
-def convert_tempreture():
-    base_temp = base_temp_menu.get()
-    target_temp = target_temp_menu.get()
-    num = num_entry.get()
+def convert_tempreture(base_temp, target_temp, num):
+    # base_temp = base_temp_menu.get()
+    # target_temp = target_temp_menu.get()
+    # num = num_entry.get()
 
     # выбор температур происходит через выпадающие списки
     # ввод числа через текстовое пол
@@ -179,7 +179,7 @@ target_temp_menu = ttk.Combobox(root2, values=temp_options)
 target_temp_menu.pack()
 
 # Кнопка для конвертации
-convert_button2 = tk.Button(root2, text="Конвертировать", command=convert_tempreture, bg="#66B2FF", activebackground="#939393")
+convert_button2 = tk.Button(root2, text="Конвертировать", command=lambda: convert_tempreture(base_temp_menu.get(), target_temp_menu.get(), num_entry.get()), bg="#66B2FF", activebackground="#939393")
 convert_button2.pack(pady=(10, 3))
 
 # Поле для вывода результата
